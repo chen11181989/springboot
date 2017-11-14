@@ -15,7 +15,7 @@
         <module>web</module>
     </modules>
 
-    <!-- 继承说明：这里继承SpringBoot提供的父工程 -->
+    <!-- 继承说明：这里继承SpringBoot提供的父工程1111 -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
