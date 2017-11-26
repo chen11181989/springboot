@@ -1,4 +1,5 @@
 package com.boot.controller;
+import com.boot.kafka.KafkaSender;
 import com.boot.module.Account;
 import com.boot.service.AccountService;
 import org.slf4j.Logger;
@@ -6,10 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -17,7 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-@RestController
+@Controller
 public class AccountController {
 
     private final static Logger logger = LoggerFactory.getLogger(AccountController.class);
@@ -28,9 +32,12 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping("/index")
-    public  String getIndex(){
+    @Autowired
+    private KafkaSender kafkaSender;
 
+    @RequestMapping(value = "/index/{number}")
+    public  String getIndex(@PathVariable int number){
+         System.out.print(10/number);
         return "index";
     }
 
@@ -51,7 +58,11 @@ public class AccountController {
        else
            return  meg;
     }
-
+    @RequestMapping(value = "/kafka")
+    public  String testKafka(){
+        kafkaSender.sendMessage();
+        return "index";
+    }
 
     public String validtorUtil(Object obj,BindingResult result){
         if (result.hasErrors()) {

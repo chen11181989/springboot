@@ -26,14 +26,15 @@ spring:
     testWhileIdle: true
     testOnBorrow: false
     testOnReturn: false
-  mvc:
-    view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
-    static-path-pattern: /**
-  output:
-    ansi:
-      enabled: always
+  kafka:
+    bootstrap-servers: 47.96.15.224:9092
+    consumer:
+      group-id: myGroup
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 redis:
   host: 127.0.0.1
   port: 6379
